@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>JS Drum Kit</title>
+  <title>The Grohlinator 9000</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -27,7 +27,7 @@
     </div>
     <div data-key="71" class="key">
       <kbd>G</kbd>
-      <span class="sound">boom</span>
+      <span class="sound">808</span>
     </div>
     <div data-key="72" class="key">
       <kbd>H</kbd>
@@ -43,7 +43,7 @@
     </div>
     <div data-key="76" class="key">
       <kbd>L</kbd>
-      <span class="sound">tink</span>
+      <span class="sound">cowbell</span>
     </div>
   </div>
 
@@ -60,9 +60,23 @@
 <script>
 window.addEventListener('keydown', function(e){
   const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`)
+  const key = document.querySelector(`.key[data-key="${e.keyCode}"]`)
+
 if(!audio) return; //stops the function if there isn't audio associated with the key
+audio.currentTime = 0; //Allows the sample to be repeatedly called
 audio.play();  
+key.classList.add('playing'); 
+key.classList.remove('playing'); 
+key.classList.toggle('playing'); 
 });
+
+function removeTransition(e){
+if (e.propertyName !== 'transform') return; 
+this.classList.remove('playing');  
+}
+const keys = document.querySelectorAll('.key')
+keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+
 </script>
 
 
